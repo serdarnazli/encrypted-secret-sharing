@@ -29,7 +29,19 @@ Crypto: Curve25519 + XSalsa20-Poly1305 via [libsodium](https://doc.libsodium.org
 pip install pynacl
 ```
 
-## Usage
+## Desktop UI
+
+Don't like terminals? Run the GUI:
+
+```bash
+python share-ui.py
+```
+
+![priv-share UI](dinosaur-ui.jpeg)
+
+Same keys, same crypto — fully interoperable with the CLI.
+
+## CLI Usage
 
 ### Generate your keypair (one-time)
 
@@ -57,10 +69,17 @@ Encrypted (send this to them):
   6_3cdyTpi_M2OJGMzQNUWCU0NwglVlHXtFRrz2xIDAhY1ezlP5J2Ny...
 ```
 
-Also works with stdin:
+Or pipe via stdin:
 
 ```bash
 echo "my-secret" | python share.py encrypt "THEIR_PUBLIC_KEY"
+```
+
+Or omit the secret — it'll prompt without echoing:
+
+```bash
+python share.py encrypt "THEIR_PUBLIC_KEY"
+Secret (won't echo):
 ```
 
 ### Decrypt a secret sent to you
@@ -72,6 +91,18 @@ python share.py decrypt "ENCRYPTED_BLOB"
 ```
 Decrypted secret:
   sk-live-my-api-key-123
+```
+
+Use `--raw` to get just the value (for scripting):
+
+```bash
+python share.py decrypt --raw "ENCRYPTED_BLOB"
+```
+
+### View your public key
+
+```bash
+python share.py pub
 ```
 
 ## Where are my keys?
